@@ -355,9 +355,10 @@ You can interact with the services using tools like `curl`, Postman, or Insomnia
 Below are screenshots demonstrating the successful startup of all three microservices.
 
 ### Eureka Server Running
-![Eureka Server Running](screenshots\Screenshot 2025-06-05 034644.png)
+
+![Screenshot 2025-06-05 034644](https://github.com/user-attachments/assets/cd267cc6-c92f-43ed-906a-1c5a3e0cecbf)
 
 ### Product Service and Order Service Running
-![Product Service and Order Service Running](screenshots\Screenshot 2025-06-05 034657.png)
+![Screenshot 2025-06-05 034657](https://github.com/user-attachments/assets/d9bd15b6-1070-4227-b21b-81b9028a0028)
 
 ## 📁 Repository Structure
