@@ -1,48 +1,87 @@
 package com.example.product_service.service;
 
-
-
-
 import com.example.product_service.entity.Product;
 import com.example.product_service.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service class for managing products.
+ */
 @Service
 public class ProductService {
     private final ProductRepository repo;
 
+    /**
+     * Constructs a ProductService with the given repository.
+     * @param repo the product repository
+     */
     public ProductService(ProductRepository repo) {
         this.repo = repo;
     }
+
+    /**
+     * Reduces the quantity of a product by a specified amount.
+     * @param id the product ID
+     * @param amount the amount to reduce
+     * @return true if successful, false otherwise
+     */
     public boolean reduceQuantity(Long id, int amount) {
-        Product p = getById(id);
-        if (p == null) {
-            System.out.println("Product with ID " + id + " not found."); // Add this log
+        Product product = getById(id);
+        if (product == null) {
+            System.out.println("Product with ID " + id + " not found.");
             return false;
         }
-        if (p.getQuantityAvailable() < amount) {
-            System.out.println("Insufficient quantity for product ID " + id + ". Available: " + p.getQuantityAvailable() + ", Requested: " + amount); // Add this log
+        if (product.getQuantityAvailable() < amount) {
+            System.out.println("Insufficient quantity for product ID " + id + ". Available: " + product.getQuantityAvailable() + ", Requested: " + amount);
             return false;
         }
-        // If we reach here, quantity can be reduced
-        p.setQuantityAvailable(p.getQuantityAvailable() - amount);
-        repo.save(p);
+        product.setQuantityAvailable(product.getQuantityAvailable() - amount);
+        repo.save(product);
         return true;
     }
 
-    public List<Product> getAll() { return repo.findAll(); }
-    public Product getById(Long id) { return repo.findById(id).orElse(null); }
-    public Product create(Product p) { return repo.save(p); }
+    /**
+     * Retrieves all products.
+     * @return list of products
+     */
+    public List<Product> getAll() {
+        return repo.findAll();
+    }
+
+    /**
+     * Retrieves a product by its ID.
+     * @param id the product ID
+     * @return the product, or null if not found
+     */
+    public Product getById(Long id) {
+        return repo.findById(id).orElse(null);
+    }
+
+    /**
+     * Creates a new product.
+     * @param product the product to create
+     * @return the created product
+     */
+    public Product create(Product product) {
+        return repo.save(product);
+    }
+
+    /**
+     * Updates an existing product.
+     * @param id the product ID
+     * @param newData the new product data
+     * @return the updated product, or null if not found
+     */
     public Product update(Long id, Product newData) {
-        Product p = getById(id);
-        if (p != null) {
-            p.setName(newData.getName());
-            p.setPrice(newData.getPrice());
-            p.setDescription(newData.getDescription());
-            p.setQuantityAvailable(newData.getQuantityAvailable());
-            return repo.save(p);
+        Product product = getById(id);
+        if (product != null) {
+            product.setName(newData.getName());
+            product.setPrice(newData.getPrice());
+            product.setDescription(newData.getDescription());
+            product.setQuantityAvailable(newData.getQuantityAvailable());
+            return repo.save(product);
         }
         return null;
     }
